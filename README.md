@@ -1,4 +1,5 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Shops is THE professional, full-featured and high performance e-commerce mobile application! You can install it in your existing TYPO3 web site within 5 minutes and can adapt, extend, overwrite and customize anything to your needs.
+# ![Alt text](/../[<branch name>/path/to](https://github.com/samcesa45/shops)/Screenshot_20230812_181648.png?raw=true "Optional Title")
 
 # Getting Started
 
