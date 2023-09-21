@@ -1,4 +1,10 @@
-Shops is THE professional, full-featured and high performance e-commerce mobile application! You can install it in your existing TYPO3 web site within 5 minutes and can adapt, extend, overwrite and customize anything to your needs.
+Shops is THE professional, full-featured and high performance e-commerce mobile application! .It is a mutli role based application with admin and customers roles 
+
+## FEATURES OF SHOPS
+# CATEGORY
+It has category feature where you can shop products based on categories
+The category is made of either a parent categories and a child categories (nested navigation) or a parent category with no child category 
+
  ![Alt text](../https://github.com/samcesa45/shops/Screenshot_20230812_181648.png?raw)
 
 # Getting Started
