@@ -1,4 +1,4 @@
-Shops is THE professional, full-featured and high performance e-commerce mobile application! .It is a mutli role based application with admin and customers roles 
+Shops is THE professional, full-featured and high performance e-commerce mobile application! .It is a multi role based application with admin and customers roles 
 
 ## FEATURES OF SHOPS
 # CATEGORY
