@@ -1,3 +1,5 @@
+import {NavigationProp, RouteProp} from '@react-navigation/native';
+
 export type RootStackParamList = {
   Home: undefined;
   Dashboard: undefined;
@@ -18,3 +20,12 @@ export type RootStackParamList = {
     categoryId: string;
   };
 };
+
+export type CategoryDetailsRouteProp = RouteProp<
+  RootStackParamList,
+  'CategoryDetails'
+>;
+export type CategoryDetailsNavigationProp = NavigationProp<
+  RootStackParamList,
+  'CategoryDetails'
+>;

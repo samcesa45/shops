@@ -13,8 +13,6 @@ import {useAppDispatch} from '../../state-management/hooks';
 import {login} from '../../state-management/features/usersSlice';
 import {setAuthToken} from '../../utils/SetAuthToken';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import useLoading from '../../components/useLoading';
-// import Spinners from 'react-native-loading-spinner-overlay';
 import {Spinner} from '../../components/Spinner';
 import Container from '../../components/Container/index';
 import {RootStackParamList} from '../../types';
@@ -30,11 +28,10 @@ const schema = yup.object({
   password: yup.string().min(6, 'Must be 6 characters or less').required(),
 });
 const LoginScreen = ({navigation}: Props) => {
-  // const isLoading = useLoading();
   const dispatch = useAppDispatch();
-
   let login_status = false;
   let error_message = '';
+
   const {
     control,
     handleSubmit,
@@ -50,7 +47,7 @@ const LoginScreen = ({navigation}: Props) => {
   const onSubmit = handleSubmit(async data => {
     login_status = true;
     await axios
-      .post(`https://9d4f-105-112-229-167.ngrok-free.app/v1/sanctum/token`)
+      .post(`https://ab1f-160-119-127-230.ngrok-free.app/v1/sanctum/token`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
     try {
@@ -143,7 +140,7 @@ const LoginScreen = ({navigation}: Props) => {
                     value={value}
                     cursorColor="black"
                     color={`${errors.password ? '#DB3022' : '#2AA952'}`}
-                    trailing={props =>
+                    trailing={() =>
                       !errors.password && (
                         <Icon color="#2AA952" name="check" size={24} />
                       )

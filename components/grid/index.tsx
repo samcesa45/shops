@@ -1,6 +1,6 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Image, Text, FlatList, Dimensions} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {View, Image, Text, FlatList, Dimensions, Pressable} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import {selectAllBrands} from '../../state-management/features/brandSlice';
 import {useAppSelector} from '../../state-management/hooks';
@@ -30,6 +30,7 @@ const Grid = ({
     const brand = brands.find(brand => brand.id === brand_id);
     return brand ? brand.name : 'unknown brand';
   };
+  const navigation = useNavigation();
   return (
     <View className="mt-4 rounded-[8px]  flex flex-row">
       <FlatList
@@ -45,8 +46,8 @@ const Grid = ({
         }}
         renderItem={({item}) => (
           <View
-            className={` rounded-[8px] mr-4  ${
-              toggle ? 'flex-row items-center' : ' flex-col w-[164px] h-[260px]'
+            className={` rounded-[8px] mr-4 flex  ${
+              toggle ? 'flex-row' : ' flex-col w-[164px] h-[260px]'
             }  mb-8  bg-white`}
             key={item.id}
             style={{elevation: 1}}>
@@ -60,23 +61,31 @@ const Grid = ({
               }}
             />
             <View className="pl-4 ">
-              <Text
-                className="text-[#222] text-[16px] capitalize font-[450] leading-normal"
-                style={{fontFamily: 'CircularStd', fontStyle: 'italic'}}>
-                {item.name}
-              </Text>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('Product', {
+                    productId: item.id,
+                    name: item.name,
+                  })
+                }
+                style={({pressed}) => [
+                  {
+                    color: pressed ? '#9B9B9B' : 'transparent',
+                    opacity: pressed ? 0.2 : 1,
+                  },
+                ]}>
+                <Text
+                  className="text-[#222] text-[16px] capitalize font-[450] leading-normal pt-[11px]"
+                  style={{fontFamily: 'CircularStd', fontStyle: 'italic'}}>
+                  {item.name}
+                </Text>
+              </Pressable>
               <Text
                 className="text-[#9B9B9B] text-[11px] font-[450] leading-normal tracking-[-0.017px]"
                 style={{fontFamily: 'CircularStd', fontStyle: 'italic'}}>
                 {getBrandName(item.brand_id)}
               </Text>
               <View className="flex flex-row items-center mt-[5px]">
-                {/* <Icon
-                  name="star"
-                  size={14}
-                  color="#FFBA49"
-                  style={{width: 14, height: 14}}
-                /> */}
                 <StarRating rating={item.rating_score} />
                 <Text
                   className="text-[#9B9B9B] text-[10px]   font-[450] leading-normal"

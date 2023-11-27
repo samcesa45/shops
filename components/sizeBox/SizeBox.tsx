@@ -4,14 +4,17 @@ import {setSizeFilter} from '../../state-management/features/filterSlice';
 import {useAppDispatch} from '../../state-management/hooks';
 type Props = {
   size: string[];
+  width: string;
+  height: string;
 };
 type AvailableSizeType = {
   item: string;
 };
 
 const {width} = Dimensions.get('window');
+const deviceWidth = width;
 const availableSizes = ['xs', 's', 'm', 'l', 'xl'];
-const SizesBox = ({size}: Props) => {
+const SizesBox = ({size, width, height}: Props) => {
   const dispatch = useAppDispatch();
 
   const toggleSize = (value: string) => {
@@ -23,8 +26,8 @@ const SizesBox = ({size}: Props) => {
   const renderSizeItem = ({item}: AvailableSizeType) => (
     <Pressable onPress={() => toggleSize(item)} className="pt-6">
       <View
-        className={`w-10 h-10 mx-4 rounded-[8px] flex border border-[#9B9B9B] flex-row items-center justify-center ${
-          isSizeSelected(item) ? 'bg-[#DB3022] border-[#ffffff]' : 'bg-white'
+        className={`w-[${width}] h-[${height}] mx-4 rounded-[8px] flex border border-[#9B9B9B]  items-center  justify-center ${
+          isSizeSelected(item) ? `bg-[#DB3022] border-[#ffffff]` : `bg-white`
         }`}>
         <Text
           className={`text-center text-sm font-medium ${
@@ -41,15 +44,15 @@ const SizesBox = ({size}: Props) => {
       <FlatList
         data={availableSizes}
         renderItem={renderSizeItem}
-        keyExtractor={item => item}
-        numColumns={availableSizes.length}
-        contentContainerStyle={{
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          width: width * 0.95,
-        }}
+        keyExtractor={item => item.indexOf.toString()}
+        numColumns={availableSizes.length - 2}
+        // contentContainerStyle={{
+        //   display: 'flex',
+        //   alignItems: 'center',
+        //   flexDirection: 'row',
+        //   justifyContent: 'center',
+        //   width: deviceWidth * 0.95,
+        // }}
       />
     </View>
   );

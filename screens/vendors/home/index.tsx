@@ -1,68 +1,55 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
 import {
-StatusBar,
   View,
   Text,
-  Platform,
-  Button,
   Pressable,
   Image,
-  ScrollView,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
-  SafeAreaView,
   Alert,
   FlatList,
   RefreshControl,
-} from "react-native";
-import { logout } from "../../../state-management/features/usersSlice";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../state-management/hooks";
-import { setAuthToken } from "../../../utils/SetAuthToken";
-import type { StatusBarStyle } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { DATA, ItemData } from "../../../utils/cardItems";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import Container from "../../../components/Container/index";
+} from 'react-native';
+import {logout} from '../../../state-management/features/usersSlice';
+import {useAppDispatch, useAppSelector} from '../../../state-management/hooks';
+import {setAuthToken} from '../../../utils/SetAuthToken';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import Container from '../../../components/Container/index';
 import {
   getAllNewProducts,
   selectAllNewProducts,
-} from "../../../state-management/features/newestProductSlice";
-import { productType } from "../../../type/model";
-import { Spinner } from "../../../components/Spinner";
+} from '../../../state-management/features/newestProductSlice';
+import {productType} from '../../../type/model';
+import {Spinner} from '../../../components/Spinner';
+import {RootStackParamList} from '../../../types';
 
-type Props = NativeStackScreenProps<RootStackParamList, "Vendors">;
+type Props = NativeStackScreenProps<RootStackParamList, 'Vendors'>;
 
 type ItemProps = {
   item: productType;
   onPress: () => void;
 };
-const { width } = Dimensions.get("window");
-const { height } = Dimensions.get("window");
+const {width} = Dimensions.get('window');
 
-const Item = ({ item, onPress }: ItemProps) => (
+const Item = ({item, onPress}: ItemProps) => (
   <Pressable onPress={onPress} className="pb-[100px]">
-    <View className=" w-[156px] h-[260px] mx-2" style={{ elevation: 2 }}>
+    <View className=" w-[156px] h-[260px] mx-2" style={{elevation: 2}}>
       <Image
-        source={{ uri: item.image_url }}
+        source={{uri: item.image_url}}
         alt={item.name}
         className=" relative w-[150px] h-[218px] "
-        style={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
+        style={{borderTopLeftRadius: 8, borderTopRightRadius: 8}}
       />
 
       <View
         className={`w-10 h-6 ${
-          item.name === "new" ? "bg-[#222]" : "bg-[#DB3022]"
-        } rounded-[29px] left-2.5 top-2.5 absolute`}
-      >
+          item.name === 'new' ? 'bg-[#222]' : 'bg-[#DB3022]'
+        } rounded-[29px] left-2.5 top-2.5 absolute`}>
         <Text
           className="text-center text-white font-[450] leading-normal text-[11px]"
-          style={{ fontFamily: "CircularStd", fontStyle: "italic" }}
-        >
+          style={{fontFamily: 'CircularStd', fontStyle: 'italic'}}>
           {item.name}
         </Text>
       </View>
@@ -80,21 +67,18 @@ const Item = ({ item, onPress }: ItemProps) => (
       <View className="flex items-start">
         <Text
           className="text-[#9B9B9B] font-[400] leading-normal text-[11px]"
-          style={{ fontFamily: "CircularStd", fontStyle: "italic" }}
-        >
+          style={{fontFamily: 'CircularStd', fontStyle: 'italic'}}>
           {/* {item.subTitle} */}
           Biggest sale
         </Text>
         <Text
           className="text-[#222] text-[16px] leading-normal mt-[5px]"
-          style={{ fontFamily: "CircularStd", fontStyle: "italic" }}
-        >
+          style={{fontFamily: 'CircularStd', fontStyle: 'italic'}}>
           {item.name}
         </Text>
         <Text
           className="text-[#222] text-sm font-medium leading-normal"
-          style={{ fontFamily: "CircularStd", fontStyle: "normal" }}
-        >
+          style={{fontFamily: 'CircularStd', fontStyle: 'normal'}}>
           $ {item.final_unit_price}
         </Text>
       </View>
@@ -102,22 +86,22 @@ const Item = ({ item, onPress }: ItemProps) => (
   </Pressable>
 );
 
-const Vendors = ({ navigation }: Props) => {
+const Vendors = ({navigation}: Props) => {
   const newestProducts = useAppSelector(selectAllNewProducts);
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setloading] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   const userLogout = async () => {
     await dispatch(logout());
-    setAuthToken("");
+    setAuthToken('');
     AsyncStorage.clear();
-    navigation.navigate("Login");
+    navigation.navigate('Login');
   };
 
-  const renderItem = ({ item }: { item: productType }) => {
-    return <Item item={item} onPress={() => console.log("hi")} />;
+  const renderItem = ({item}: {item: productType}) => {
+    return <Item item={item} onPress={() => console.log('hi')} />;
   };
 
   const onRefresh = React.useCallback(() => {
@@ -131,47 +115,44 @@ const Vendors = ({ navigation }: Props) => {
     setloading(true);
     dispatch(getAllNewProducts())
       .unwrap()
-      .then((result) => {
+      .then(result => {
         setloading(false);
-        setErrorMessage("");
+        setErrorMessage('');
       })
-      .catch((errorResponse) => {
+      .catch(errorResponse => {
         Alert.alert(errorResponse.message);
         setErrorMessage(errorResponse.message);
       });
   }, [dispatch]);
 
   return (
-    <Container isScrollable style={{ flex: 1 }}>
+    <Container isScrollable style={{flex: 1}}>
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       <View className="relative">
         <Image
-          source={require("../../../assets/vendor_bg.png")}
+          source={require('../../../assets/vendor_bg.png')}
           style={styles.image}
           resizeMode="cover"
         />
         <View className="mx-3.5 absolute bottom-[20px]">
-          {/* <Button title="logout" onPress={userLogout} /> */}
           <Text
             className="text-[#fff]  text-[48px] font-[900] capitalize leading-normal"
-            style={{ fontFamily: "CircularStd" }}
-          >
+            style={{fontFamily: 'CircularStd'}}>
             Fashion Sale
           </Text>
 
           <Pressable
-            android_ripple={{ color: "#99443d" }}
+            android_ripple={{color: '#99443d'}}
             className="mt-3.5 rounded-[25px] bg-[#DB3022] shadow-lg w-[160px] h-9"
-            onPress={() => navigation.navigate("CheckSale")}
+            onPress={() => navigation.navigate('CheckSale')}
             // onPress={userLogout}
           >
             <Text
               className="text-white my-1 text-center capitalize text-sm font-medium"
               style={{
-                fontFamily: "CircularStd",
-                fontStyle: "italic",
-              }}
-            >
+                fontFamily: 'CircularStd',
+                fontStyle: 'italic',
+              }}>
               Check
             </Text>
           </Pressable>
@@ -182,21 +163,18 @@ const Vendors = ({ navigation }: Props) => {
           <View className="">
             <Text
               className="font-[700] text-[34px] text-[#222] leading-normal"
-              style={{ fontFamily: "CircularStd" }}
-            >
+              style={{fontFamily: 'CircularStd'}}>
               New
             </Text>
             <Text
               className="text-[#9B9B9B] text-[14px] font-[450] leading-normal"
-              style={{ fontFamily: "CircularStd", fontStyle: "italic" }}
-            >
+              style={{fontFamily: 'CircularStd', fontStyle: 'italic'}}>
               You’ve never seen it before!
             </Text>
           </View>
           <Text
             className="text-[14px] text-[#222] font-[450] leading-normal"
-            style={{ fontFamily: "CircularStd", fontStyle: "italic" }}
-          >
+            style={{fontFamily: 'CircularStd', fontStyle: 'italic'}}>
             view all
           </Text>
         </View>
@@ -210,7 +188,7 @@ const Vendors = ({ navigation }: Props) => {
               bounces={false}
               horizontal
               showsHorizontalScrollIndicator={false}
-              keyExtractor={(item) => item.id!}
+              keyExtractor={item => item.id}
             />
           )}
         </View>
@@ -224,21 +202,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   barStyle: {
-    color: "#ffffff",
+    color: '#ffffff',
   },
   image: {
     flex: 1,
-    resizeMode: "cover",
+    resizeMode: 'cover',
     width: width,
     height: 536,
   },
   text: {
-    color: "white",
+    color: 'white',
     fontSize: 42,
     lineHeight: 84,
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "#000000",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: '#000000',
   },
 });
 

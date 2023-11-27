@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Alert, Pressable, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -8,6 +7,7 @@ import Grid from '../../../components/grid';
 import FilterModal from '../../../components/modal/FilterModal';
 import SortModal from '../../../components/modal/SortModal';
 import {Spinner} from '../../../components/Spinner';
+
 import {
   getAllBrands,
   selectAllBrands,
@@ -27,12 +27,20 @@ import {useAppDispatch, useAppSelector} from '../../../state-management/hooks';
 import {productType} from '../../../type/model';
 import getFilteredProducts from '../../../utils/getFilteredProducts';
 import {sortProductCategory} from '../../../utils/sortProductCategory';
+import {
+  CategoryDetailsNavigationProp,
+  CategoryDetailsRouteProp,
+} from '../../../types';
 
 type ItemProps = {
   title: string;
 };
+interface CategoryDetailsProps {
+  route: CategoryDetailsRouteProp;
+  navigation: CategoryDetailsNavigationProp;
+}
 
-const CategoryDetails = ({route}: any) => {
+const CategoryDetails = ({route, navigation}: CategoryDetailsProps) => {
   const [errMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [numColumns, setNumColumns] = useState(2);
@@ -45,10 +53,10 @@ const CategoryDetails = ({route}: any) => {
   const dispatch = useAppDispatch();
   const products = useAppSelector(selectAllProducts);
   const brands = useAppSelector(selectAllBrands);
-  // const getParentCat = categories.find(cat => cat.parent_id === null);
   const getChildCat = categories.filter(cat => cat.parent_id === categoryId);
   const [filteringProducts, setFilteringProducts] = useState<productType[]>([]);
   const [activeFilter, setActiveFilter] = useState(true);
+
   // const [selectedBrands, setSelectedBrands] = useState(
   //   Array(brands.length).fill(false)
   // );
@@ -180,15 +188,22 @@ const CategoryDetails = ({route}: any) => {
           </Text>
         </View>
         <View className="mt-[11px] text-[#222]">
-          <Pressable>
-            <FlatList
-              data={getChildCat}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => item.id}
-              renderItem={({item}) => <Item title={item.name} />}
-            />
-          </Pressable>
+          <FlatList
+            data={getChildCat}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => (
+              <Pressable
+                onPress={() =>
+                  navigation.push('CategoryDetails', {
+                    categoryId: item.id,
+                  })
+                }>
+                <Item title={item.name} />
+              </Pressable>
+            )}
+          />
         </View>
         <View className="mt-[18px] ml-3.5">
           <View className="bg-[#F9F9F9] flex flex-row justify-start items-center py-1">
@@ -197,7 +212,13 @@ const CategoryDetails = ({route}: any) => {
                 onPress={() => {
                   toggleFilter();
                   setFilterModalVisible(true);
-                }}>
+                }}
+                style={({pressed}) => [
+                  {
+                    backgroundColor: pressed ? '#9B9B9B' : 'transparent',
+                    opacity: pressed ? 0.2 : 1,
+                  },
+                ]}>
                 <Icon name="filter" color={'#222'} size={24} />
               </Pressable>
               <Text
@@ -211,7 +232,13 @@ const CategoryDetails = ({route}: any) => {
                 onPress={() => {
                   toggleFilter();
                   setModalVisible(true);
-                }}>
+                }}
+                style={({pressed}) => [
+                  {
+                    backgroundColor: pressed ? '#9B9B9B' : 'transparent',
+                    opacity: pressed ? 0.2 : 1,
+                  },
+                ]}>
                 <IconSwap name="swap-vertical" color={'#222'} size={24} />
               </Pressable>
               <Text
@@ -221,7 +248,14 @@ const CategoryDetails = ({route}: any) => {
               </Text>
             </View>
             <View className="flex flex-row ml-[62px] items-center">
-              <Pressable onPress={handleGridToggle}>
+              <Pressable
+                onPress={handleGridToggle}
+                style={({pressed}) => [
+                  {
+                    backgroundColor: pressed ? '#9B9B9B' : 'transparent',
+                    opacity: pressed ? 0.2 : 1,
+                  },
+                ]}>
                 {toggle ? (
                   <IconSwap name="view-module" color={'#222'} size={24} />
                 ) : (

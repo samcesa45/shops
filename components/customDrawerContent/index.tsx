@@ -3,9 +3,11 @@ import {View, Text, Pressable} from 'react-native';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {useAppSelector} from '../../state-management/hooks';
 import {selectAllCategories} from '../../state-management/features/categoriesSlice';
+// import {useNavigation} from '@react-navigation/native';
 
 const CustomDrawerContent = ({navigation}: any) => {
   const categories = useAppSelector(selectAllCategories);
+  // const navigation = useNavigation();
 
   return (
     <DrawerContentScrollView>
@@ -33,16 +35,18 @@ const CustomDrawerContent = ({navigation}: any) => {
               borderTopColor: 'rgba(155,155,1,0.25)',
             }}>
             <Pressable
-              android_ripple={{
-                color: '#9B9B9B',
-                borderless: true,
-              }}
               onPress={() =>
                 navigation.navigate('CategoryDetails', {
                   categoryId: item.id,
                   parentId: item.parent_id,
                 })
-              }>
+              }
+              style={({pressed}) => [
+                {
+                  color: pressed ? '#9B9B9B' : 'transparent',
+                  opacity: pressed ? 0.2 : 1,
+                },
+              ]}>
               <Text
                 className="text-[#222] text-[16px] ml-[40px]  leading-normal font-medium"
                 style={{fontFamily: 'CircularStd', fontStyle: 'italic'}}>

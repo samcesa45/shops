@@ -113,7 +113,14 @@ const Custom = () => {
   const navigation = useNavigation();
   return (
     <>
-      <Pressable onPress={() => navigation.toggleDrawer()}>
+      <Pressable
+        onPress={() => navigation.toggleDrawer()}
+        style={({pressed}) => [
+          {
+            color: pressed ? '#9B9B9B' : 'transparent',
+            opacity: pressed ? 0.2 : 1,
+          },
+        ]}>
         <Icon
           name={Platform.OS === 'android' ? 'search' : 'ios-menu'}
           size={20}

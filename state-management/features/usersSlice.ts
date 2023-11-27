@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import axios from 'axios';
 
-import type { RootState } from "../store";
+import type {RootState} from '../store';
 
 type roleType = string;
 
@@ -23,37 +23,37 @@ type userType = {
 };
 
 const profile: userType = {
-  id: "",
-  username: "",
-  first_name: "",
-  last_name: "",
-  telephone: "",
-  data_of_birth: "",
-  profile_picture_path: "",
-  email: "",
-  email_verified_at: "",
-  password: "",
-  is_platform_admin: "",
-  remember_token: "",
-  created_at: "",
-  updated_at: "",
+  id: '',
+  username: '',
+  first_name: '',
+  last_name: '',
+  telephone: '',
+  data_of_birth: '',
+  profile_picture_path: '',
+  email: '',
+  email_verified_at: '',
+  password: '',
+  is_platform_admin: '',
+  remember_token: '',
+  created_at: '',
+  updated_at: '',
 };
 
 const userRecord: userType = {
-  id: "",
-  username: "",
-  first_name: "",
-  last_name: "",
-  telephone: "",
-  data_of_birth: "",
-  profile_picture_path: "",
-  email: "",
-  email_verified_at: "",
-  password: "",
-  is_platform_admin: "",
-  remember_token: "",
-  created_at: "",
-  updated_at: "",
+  id: '',
+  username: '',
+  first_name: '',
+  last_name: '',
+  telephone: '',
+  data_of_birth: '',
+  profile_picture_path: '',
+  email: '',
+  email_verified_at: '',
+  password: '',
+  is_platform_admin: '',
+  remember_token: '',
+  created_at: '',
+  updated_at: '',
 };
 
 const users: userType[] = [];
@@ -62,10 +62,10 @@ const userRoles: roleType[] = [];
 const initialState = {
   profile,
   users,
-  status: "idle",
+  status: 'idle',
   userRecord,
   isAuthenticated: false,
-  userRoles: "",
+  userRoles: '',
 };
 
 type valueType = {
@@ -74,21 +74,21 @@ type valueType = {
 };
 
 export const login = createAsyncThunk(
-  "users/login",
-  async ({ email, password }: valueType) => {
-    const userResponse = await axios.post(`/v1/login`, { email, password });
+  'users/login',
+  async ({email, password}: valueType) => {
+    const userResponse = await axios.post(`/v1/login`, {email, password});
     return await userResponse.data;
   }
 );
 
-export const logout = createAsyncThunk("users/logout", async () => {
+export const logout = createAsyncThunk('users/logout', async () => {
   const userLogoutResponse = await axios.post(`/v1/logout`);
   return await userLogoutResponse.data;
 });
 
 export const getAllUsers = createAsyncThunk(
-  "users/index",
-  async (_, { rejectWithValue }) => {
+  'users/index',
+  async (_, {rejectWithValue}) => {
     try {
       const response = await axios.get(`/v1/users/list`);
       // console.log(response)
@@ -101,8 +101,8 @@ export const getAllUsers = createAsyncThunk(
 );
 
 export const getUserById = createAsyncThunk(
-  "users/show",
-  async (id: string, { rejectWithValue }) => {
+  'users/show',
+  async (id: string, {rejectWithValue}) => {
     try {
       const response = await axios.get(`/v1/user/${id}`);
       return await response.data;
@@ -114,9 +114,9 @@ export const getUserById = createAsyncThunk(
 
 export const changePassword = createAsyncThunk(
   `users/changePassword`,
-  async (values: any, { rejectWithValue }) => {
+  async (values: any, {rejectWithValue}) => {
     try {
-      const id = values.get("id");
+      const id = values.get('id');
       const storeResponse = await axios.post(`/v1/password/reset`, values);
       return storeResponse.data;
     } catch (err: any) {
@@ -127,9 +127,9 @@ export const changePassword = createAsyncThunk(
 
 export const update = createAsyncThunk(
   `users/update`,
-  async (values: any, { rejectWithValue }) => {
+  async (values: any, {rejectWithValue}) => {
     try {
-      const id = values.get("id");
+      const id = values.get('id');
       const storeResponse = await axios.post(`/v1/admin/${id}`, values);
       return await storeResponse.data;
     } catch (err: any) {
@@ -140,9 +140,9 @@ export const update = createAsyncThunk(
 
 export const updateUserProfilePicture = createAsyncThunk(
   `users/update/profile`,
-  async (values: any, { rejectWithValue }) => {
+  async (values: any, {rejectWithValue}) => {
     try {
-      const id = values.get("id");
+      const id = values.get('id');
       const storeResponse = await axios.post(
         `/v1/user/profileImage/${id}`,
         values
@@ -155,19 +155,19 @@ export const updateUserProfilePicture = createAsyncThunk(
 );
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
       .addCase(login.pending, (state, action) => {
-        state.status = "pending";
+        state.status = 'pending';
       })
       .addCase(login.fulfilled, (state, action) => {
-        if (state.status === "pending") {
-          state.status = "idle";
+        if (state.status === 'pending') {
+          state.status = 'idle';
           if (
-            action.payload.hasOwnProperty("success") &&
+            action.payload.hasOwnProperty('success') &&
             action.payload.success === true
           ) {
             state.isAuthenticated = true;
@@ -179,87 +179,87 @@ export const userSlice = createSlice({
         }
       })
       .addCase(login.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.isAuthenticated = false;
       })
       .addCase(logout.pending, (state, action) => {
-        state.status = "pending";
+        state.status = 'pending';
       })
       .addCase(logout.fulfilled, (state, action) => {
-        if (state.status === "pending") {
-          state.status = "idle";
+        if (state.status === 'pending') {
+          state.status = 'idle';
           state.isAuthenticated = false;
           state.profile = profile;
         }
       })
       .addCase(logout.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.isAuthenticated = false;
         state.profile = profile;
       })
       .addCase(getAllUsers.pending, (state, action) => {
-        state.status = "pending";
+        state.status = 'pending';
       })
       .addCase(getAllUsers.fulfilled, (state, action) => {
-        if (state.status === "pending") {
-          state.status = "idle";
+        if (state.status === 'pending') {
+          state.status = 'idle';
         }
 
         if (
-          action.payload.hasOwnProperty("suceess") &&
+          action.payload.hasOwnProperty('suceess') &&
           action.payload.sucess === true
         ) {
           state.users = action.payload.data;
         }
       })
       .addCase(getAllUsers.rejected, (state, action) => {
-        state.status = "rejected";
+        state.status = 'rejected';
       })
       .addCase(getUserById.pending, (state, action) => {
-        state.status = "pending";
+        state.status = 'pending';
       })
       .addCase(getUserById.fulfilled, (state, action) => {
-        if (state.status === "pending") {
-          state.status = "idle";
+        if (state.status === 'pending') {
+          state.status = 'idle';
         }
         if (
-          action.payload.hasOwnProperty("success") &&
+          action.payload.hasOwnProperty('success') &&
           action.payload.success === true
         ) {
           state.userRecord = action.payload.data;
         }
       })
       .addCase(getUserById.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.userRecord = userRecord;
       })
       .addCase(changePassword.pending, (state, action) => {
-        state.status = "pending";
+        state.status = 'pending';
       })
       .addCase(changePassword.fulfilled, (state, action) => {
-        if (state.status === "pending") {
-          state.status = "idle";
+        if (state.status === 'pending') {
+          state.status = 'idle';
         }
 
         if (
-          action.payload.hasOwnProperty("success") &&
+          action.payload.hasOwnProperty('success') &&
           action.payload.success === true
         ) {
           state.userRecord = action.payload.data;
         }
       })
       .addCase(changePassword.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
       })
       .addCase(update.pending, (state, action) => {
-        state.status = "pending";
+        state.status = 'pending';
       })
       .addCase(update.fulfilled, (state, action) => {
-        if (state.status === "pending") {
-          state.status = "idle";
+        if (state.status === 'pending') {
+          state.status = 'idle';
         }
         if (
-          action.payload.hasOwnProperty("success") &&
+          action.payload.hasOwnProperty('success') &&
           action.payload.success === true
         ) {
           state.userRecord = action.payload.data;
@@ -267,17 +267,17 @@ export const userSlice = createSlice({
         }
       })
       .addCase(update.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
       })
       .addCase(updateUserProfilePicture.pending, (state, action) => {
-        state.status = "pending";
+        state.status = 'pending';
       })
       .addCase(updateUserProfilePicture.fulfilled, (state, action) => {
-        if (state.status === "pending") {
-          state.status = "idle";
+        if (state.status === 'pending') {
+          state.status = 'idle';
         }
         if (
-          action.payload.hasOwnProperty("success") &&
+          action.payload.hasOwnProperty('success') &&
           action.payload.success === true
         ) {
           state.userRecord = action.payload.data;
@@ -285,7 +285,7 @@ export const userSlice = createSlice({
         }
       })
       .addCase(updateUserProfilePicture.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
       });
   },
 });

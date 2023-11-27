@@ -112,13 +112,16 @@ const Category = () => {
   const renderItem = ({item}: {item: categoryType}) => {
     const borderBottomWidth = item.id === selectedId ? 2 : 0;
     const borderBottomColor = item.id === selectedId ? '#DB3022' : '';
-    // const color = item.id === selectedId ? "#222" : "black";
+
     return (
       <Item
-        style={{borderBottomWidth, borderBottomColor, height: 34}}
+        style={{
+          borderBottomWidth,
+          borderBottomColor,
+          height: 34,
+        }}
         item={item}
         onPress={() => toggleCategory(item.id)}
-        // backgroundColor={backgroundColor}
         textColor={'#222'}
       />
     );
@@ -140,7 +143,7 @@ const Category = () => {
           <FlatList
             data={filteredCat}
             renderItem={renderItem}
-            // keyExtractor={(item, index) => item.id}
+            keyExtractor={item => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}
             extraData={selectedId}
@@ -192,6 +195,20 @@ const Category = () => {
                   name={item.name}
                   image_url={item.image_url}
                   id={item.id}
+                  description={''}
+                  qty={0}
+                  qty_uom={0}
+                  final_unit_price={0}
+                  unit_discount_price={0}
+                  status={''}
+                  size={''}
+                  color={''}
+                  rating_score={0}
+                  final_total_rating={undefined}
+                  category_id={''}
+                  brand_id={''}
+                  created_at={''}
+                  updated_at={''}
                 />
               )}
             />

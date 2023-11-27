@@ -46,6 +46,7 @@ function FilterModal({
     <Modal
       propagateSwipe={true}
       isVisible={modalFilterVisible}
+      onBackdropPress={() => setFilterModalVisible(false)}
       style={styles.modal}>
       <Container isScrollable={true} style={{flex: 1}}>
         <Text
@@ -91,8 +92,10 @@ function FilterModal({
             style={{fontFamily: 'CircularStd', fontStyle: 'italic'}}>
             Sizes
           </Text>
-          <View className="bg-white h-[100px] mt-2 pt-2" style={{elevation: 2}}>
-            <SizesBox size={size} />
+          <View
+            className="bg-white  mt-2 py-2 flex flex-row flex-wrap"
+            style={{elevation: 2}}>
+            <SizesBox size={size} width={'60px'} height={`40px`} />
           </View>
         </View>
         <View className="">

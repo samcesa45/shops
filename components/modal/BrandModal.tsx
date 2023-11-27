@@ -32,7 +32,7 @@ const {width} = Dimensions.get('window');
 const BrandModal = ({
   showSearchModal,
   setShowSearchModal,
-  // setFilterModalVisible,
+  setFilterModalVisible,
   brand,
 }: Props) => {
   // const brands = useAppSelector(selectAllBrands);
@@ -40,15 +40,7 @@ const BrandModal = ({
   const brands = useAppSelector(selectAllBrands);
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  // const [checkedItems, setCheckedItems] = useState(
-  //   Array(brands.length).fill(false)
-  // );
 
-  // const handleCheckBoxChange = (index: number) => {
-  //   setSelectedBrands(prevCheckedItems =>
-  //     prevCheckedItems.map((checked, i) => (i === index ? !checked : checked))
-  //   );
-  // };
   const handleCheckBoxChange = (index: number) => {
     dispatch(setBrandFilter(index));
   };
@@ -59,7 +51,8 @@ const BrandModal = ({
     item.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const isBrandSelected = (item: string) => brand?.includes(item);
+  const isBrandSelected = (item: string) =>
+    Array.isArray(brand) && brand.includes(item);
 
   useEffect(() => {
     setIsLoading(true);
@@ -81,6 +74,7 @@ const BrandModal = ({
     <Modal
       propagateSwipe={true}
       isVisible={showSearchModal}
+      onBackdropPress={() => setFilterModalVisible(false)}
       style={styles.modal}>
       <Container isScrollable={true} style={{flex: 1}}>
         <View className="w-[343px] mx-4  mt-[44px]">
@@ -119,11 +113,13 @@ const BrandModal = ({
                   id={item.id}
                   value={isBrandSelected(item.id)}
                   onValueChange={() => handleCheckBoxChange(index)}
-                  tintColors={isBrandSelected(item.id) ? '#DB3022' : '#222'}
+                  onFillColor={isBrandSelected(item.id) ? '#DB3022' : '#222'}
                   onTintColor={'#DB3022'}
-                  onCheckColor={'#DB3022'}
-                  boxType="circle"
-                  tintColor={isBrandSelected(item.id) ? '#DB3022' : '#222'}
+                  onCheckColor={isBrandSelected(item.id) ? '#DB3022' : '#222'}
+                  tintColors={isBrandSelected(item.id) ? '#DB3022' : '#222'}
+                  boxType={'square'}
+                  lineWidth={2}
+                  hideBox={false}
                 />
               </View>
             ))

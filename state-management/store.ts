@@ -1,20 +1,15 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  PAUSE,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
-  FLUSH,
-  PERSIST,
-} from "redux-persist";
-import userReducer from "./features/usersSlice";
-import categoryReducer from "./features/categoriesSlice";
-import productReducer from "./features/productsSlice";
-import persistReducer from "redux-persist/lib/persistReducer";
-import newestProductReducer from "./features/newestProductSlice";
-import brandReducer from "./features/brandSlice";
-import filterReducer from "./features/filterSlice";
+import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {PAUSE, PURGE, REGISTER, REHYDRATE, FLUSH, PERSIST} from 'redux-persist';
+import userReducer from './features/usersSlice';
+import categoryReducer from './features/categoriesSlice';
+import productReducer from './features/productsSlice';
+import persistReducer from 'redux-persist/lib/persistReducer';
+import newestProductReducer from './features/newestProductSlice';
+import brandReducer from './features/brandSlice';
+import filterReducer from './features/filterSlice';
+import cartItemReducer from './features/cartItemSlice';
+// import {api} from './services/api';
 
 const reducers = combineReducers({
   user: userReducer,
@@ -23,21 +18,23 @@ const reducers = combineReducers({
   product: productReducer,
   newestProduct: newestProductReducer,
   filter: filterReducer,
+  cartItem: cartItemReducer,
 });
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage: AsyncStorage,
   version: 1,
-  Whitelist: ["user"],
+  Whitelist: ['user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  devTools: process.env.NODE_ENV !== "production",
-  middleware: (getDefaulMiddleware) =>
+
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: getDefaulMiddleware =>
     getDefaulMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

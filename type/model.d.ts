@@ -7,6 +7,13 @@ export type categoryType = {
   updated_at: string;
 };
 
+export type brandType = {
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type productType = {
   id: string;
   name: string;
@@ -26,10 +33,17 @@ export type productType = {
   created_at: string;
   updated_at: string;
 };
-
-export type brandType = {
+export type cartType = {
   id: string;
-  name: string;
-  created_at: string;
-  updated_at: string;
+  status: string;
+};
+
+export type cartItemType = {
+  id: string;
+  qty: number;
+  qty_uom: string;
+  final_unit_price: number;
+  unit_discount_pct: number;
+  status: string;
+  product_id: string;
 };
