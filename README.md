@@ -1,4 +1,11 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+Shops is THE professional, full-featured and high performance e-commerce mobile application! .It is a multi role based application with admin and customers roles 
+
+## FEATURES OF SHOPS
+# CATEGORY
+It has category feature where you can shop products based on categories
+The category is made of either a parent categories and a child categories (nested navigation) or a parent category with no child category 
+
+ ![Alt text](../https://github.com/samcesa45/shops/Screenshot_20230812_181648.png?raw)
 
 # Getting Started
 
