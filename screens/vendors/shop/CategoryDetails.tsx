@@ -31,6 +31,7 @@ import {
   CategoryDetailsNavigationProp,
   CategoryDetailsRouteProp,
 } from '../../../types';
+import {capitalizeFirstLetter} from '../../../utils/capitalizeFirstLetter';
 
 type ItemProps = {
   title: string;
@@ -164,10 +165,6 @@ const CategoryDetails = ({route, navigation}: CategoryDetailsProps) => {
   if (isLoading) {
     return <Spinner />;
   }
-
-  const capitalizeFirstLetter = (word: string) => {
-    return `${word.charAt(0).toUpperCase() + word.slice(1)}`;
-  };
 
   return (
     <Container isScrollable={false} style={{flex: 1}}>

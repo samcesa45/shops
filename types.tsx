@@ -4,6 +4,9 @@ export type RootStackParamList = {
   Home: undefined;
   Dashboard: undefined;
   Profile: undefined;
+  Profiles: undefined;
+  Orders: undefined;
+  Payment: undefined;
   Login: undefined;
   ForgotPassword: undefined;
   Register: {itemId: number};

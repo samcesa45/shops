@@ -15,6 +15,12 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useNavigation} from '@react-navigation/native';
 import CustomDrawerContent from '../../../components/customDrawerContent';
 import CategoryDetails from '../../vendors/shop/CategoryDetails';
+import Orders from '../../vendors/profile/orders/Orders';
+import Payment from '../../vendors/profile/payment/Payment';
+import Reviews from '../../vendors/profile/reviews/Reviews';
+import Settings from '../../vendors/profile/settings/Settings';
+import Shipping from '../../vendors/profile/shipping/Shipping';
+import PromoCodes from '../../vendors/profile/promocodes/PromoCodes';
 
 const Tab = createBottomTabNavigator();
 
@@ -60,7 +66,11 @@ const VendorTabs = () => {
       />
       <Tab.Screen name="Bag" component={Bag} />
       <Tab.Screen name="Favourite" component={Favourite} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{headerShown: false}}
+      />
     </Tab.Navigator>
   );
 };
@@ -91,7 +101,7 @@ const VendorsScreen = () => {
 };
 const ShopScreen = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator options={{headerShown: false}}>
       <Stack.Screen
         name="Drawer"
         component={MyDrawer}
@@ -104,6 +114,57 @@ const ShopScreen = () => {
           headerTransparent: true,
         }}
         component={CategoryDetails}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const ProfileScreen = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Profiles"
+        component={Profile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Orders"
+        component={Orders}
+        options={({navigation}) => ({
+          headerRight: () => <Icon name="search" size={17.49} color="#222" />,
+          headerTransparent: true,
+          headerTitle: '',
+          headerLeft: () => (
+            <Pressable onPress={() => navigation.goBack()}>
+              <Icon name="chevron-left" size={17.49} color="#222" />
+            </Pressable>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Payment"
+        component={Payment}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PromoCodes"
+        component={PromoCodes}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Reviews"
+        component={Reviews}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Shipping"
+        component={Shipping}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

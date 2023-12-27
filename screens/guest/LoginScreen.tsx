@@ -47,7 +47,7 @@ const LoginScreen = ({navigation}: Props) => {
   const onSubmit = handleSubmit(async data => {
     login_status = true;
     await axios
-      .post(`https://ab1f-160-119-127-230.ngrok-free.app/v1/sanctum/token`)
+      .post(`https://7f7f-105-113-61-139.ngrok-free.app/v1/sanctum/token`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
     try {

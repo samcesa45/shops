@@ -32,7 +32,7 @@ const Navigation = () => {
     isAuthenticatedAdmin = true;
   }
 
-  axios.defaults.baseURL = `https://ab1f-160-119-127-230.ngrok-free.app/api`;
+  axios.defaults.baseURL = `https://7f7f-105-113-61-139.ngrok-free.app/api`;
   axios.defaults.withCredentials = true;
   const isLoading = useLoading();
   const login_status = false;

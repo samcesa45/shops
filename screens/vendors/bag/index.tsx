@@ -21,10 +21,7 @@ import {
 import {Divider} from '@react-native-material/core';
 import {useAppDispatch, useAppSelector} from '../../../state-management/hooks';
 
-import {
-  deleteProduct,
-  selectAllProducts,
-} from '../../../state-management/features/productsSlice';
+import {selectAllProducts} from '../../../state-management/features/productsSlice';
 import {
   deleteCartItems,
   getAllCartItems,

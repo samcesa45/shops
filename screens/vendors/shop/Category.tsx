@@ -190,27 +190,7 @@ const Category = () => {
               showsVerticalScrollIndicator={false}
               keyExtractor={item => item.id}
               extraData={selectedId}
-              renderItem={({item}) => (
-                <ProductItem
-                  name={item.name}
-                  image_url={item.image_url}
-                  id={item.id}
-                  description={''}
-                  qty={0}
-                  qty_uom={0}
-                  final_unit_price={0}
-                  unit_discount_price={0}
-                  status={''}
-                  size={''}
-                  color={''}
-                  rating_score={0}
-                  final_total_rating={undefined}
-                  category_id={''}
-                  brand_id={''}
-                  created_at={''}
-                  updated_at={''}
-                />
-              )}
+              renderItem={({item}) => <ProductItem {...item} />}
             />
           )}
         </View>

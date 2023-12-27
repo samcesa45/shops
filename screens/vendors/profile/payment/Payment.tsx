@@ -1,0 +1,12 @@
+import React from 'react';
+import {View, Text} from 'react-native';
+
+const Payment = () => {
+  return (
+    <View>
+      <Text className="text-[#222]">Payment</Text>
+    </View>
+  );
+};
+
+export default Payment;
